@@ -1,0 +1,29 @@
+@model SistemaVentas.Models.Cliente
+@{
+    ViewData["Title"] = "Eliminar cliente";
+}
+
+<div class="mb-6">
+    <h2 class="font-display text-2xl font-semibold text-slate-900">Eliminar cliente</h2>
+</div>
+
+<div class="max-w-2xl rounded-3xl border border-rose-200 bg-white p-6 sm:p-8 shadow-panel">
+    <div class="rounded-2xl border border-andes-gold/40 bg-andes-gold/15 px-4 py-3 text-sm text-andes-navy mb-6">
+        ¿Seguro que desea eliminar a este cliente?
+    </div>
+    <dl class="grid gap-4 sm:grid-cols-2 mb-8">
+        <div>
+            <dt class="text-xs uppercase tracking-[0.12em] text-slate-500 font-semibold">Nombre</dt>
+            <dd class="mt-1 font-semibold text-slate-900">@Model.NombreCompleto</dd>
+        </div>
+        <div>
+            <dt class="text-xs uppercase tracking-[0.12em] text-slate-500 font-semibold">Email</dt>
+            <dd class="mt-1 font-semibold">@Model.Email</dd>
+        </div>
+    </dl>
+    <form asp-action="Delete" class="flex flex-wrap gap-3">
+        <input type="hidden" asp-for="ClienteId" />
+        <button type="submit" class="inline-flex rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-500 transition">Eliminar</button>
+        <a asp-action="Index" class="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">Cancelar</a>
+    </form>
+</div>

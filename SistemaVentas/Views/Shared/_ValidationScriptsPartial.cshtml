@@ -1,0 +1,18 @@
+﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/validaciones.js" asp-append-version="true"></script>
+<script>
+    if (window.jQuery && jQuery.validator) {
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Este campo es obligatorio",
+            email: "Ingrese un email válido",
+            number: "Ingrese solo números",
+            digits: "Ingrese solo dígitos enteros",
+            min: jQuery.validator.format("El valor mínimo es {0}"),
+            max: jQuery.validator.format("El valor máximo es {0}"),
+            maxlength: jQuery.validator.format("Máximo {0} caracteres"),
+            minlength: jQuery.validator.format("Mínimo {0} caracteres"),
+            range: jQuery.validator.format("Ingrese un valor entre {0} y {1}")
+        });
+    }
+</script>

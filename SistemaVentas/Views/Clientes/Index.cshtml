@@ -1,0 +1,57 @@
+@model IEnumerable<SistemaVentas.Models.Cliente>
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <h2 class="font-display text-2xl font-semibold text-slate-900">Clientes</h2>
+        <p class="text-sm text-slate-500 mt-1">Directorio comercial y datos de contacto.</p>
+    </div>
+    <a asp-action="Create" class="inline-flex items-center justify-center rounded-xl bg-andes-blue px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-andes-blue/90 transition">
+        Nuevo cliente
+    </a>
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">@TempData["Mensaje"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">@TempData["Error"]</div>
+}
+
+<div class="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-panel">
+    <div class="overflow-x-auto">
+        <table class="table-pro">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="font-semibold text-slate-900">@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td class="text-slate-600">@item.Email</td>
+                        <td class="text-slate-500">@(item.Telefono ?? "—")</td>
+                        <td class="text-right whitespace-nowrap">
+                            <a asp-action="Details" asp-route-id="@item.ClienteId" class="text-sm font-semibold text-slate-600 hover:text-andes-blue">Ver</a>
+                            <span class="text-slate-300 mx-1">|</span>
+                            <a asp-action="Edit" asp-route-id="@item.ClienteId" class="text-sm font-semibold text-slate-600 hover:text-andes-blue">Editar</a>
+                            <span class="text-slate-300 mx-1">|</span>
+                            <a asp-action="Delete" asp-route-id="@item.ClienteId" class="text-sm font-semibold text-rose-600 hover:text-rose-700">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

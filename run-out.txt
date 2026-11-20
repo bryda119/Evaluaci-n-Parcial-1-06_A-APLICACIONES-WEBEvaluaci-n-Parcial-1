@@ -1,0 +1,110 @@
+Compilando...
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      PRAGMA journal_mode = 'wal';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "__EFMigrationsHistory" (
+          "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+          "ProductVersion" TEXT NOT NULL
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+info: Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20261120160049_InitialCreate'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "Clientes" (
+          "cliente_id" INTEGER NOT NULL CONSTRAINT "PK_Clientes" PRIMARY KEY AUTOINCREMENT,
+          "Nombre" TEXT NOT NULL,
+          "Apellido" TEXT NOT NULL,
+          "Email" TEXT NOT NULL,
+          "Telefono" TEXT NULL
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "Productos" (
+          "producto_id" INTEGER NOT NULL CONSTRAINT "PK_Productos" PRIMARY KEY AUTOINCREMENT,
+          "Nombre" TEXT NOT NULL,
+          "Descripcion" TEXT NULL,
+          "Precio" decimal(18,2) NOT NULL,
+          "Stock" INTEGER NOT NULL
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "Ventas" (
+          "venta_id" INTEGER NOT NULL CONSTRAINT "PK_Ventas" PRIMARY KEY AUTOINCREMENT,
+          "cliente_id" INTEGER NOT NULL,
+          "Fecha" TEXT NOT NULL,
+          "Total" decimal(18,2) NOT NULL,
+          CONSTRAINT "FK_Ventas_Clientes_cliente_id" FOREIGN KEY ("cliente_id") REFERENCES "Clientes" ("cliente_id") ON DELETE RESTRICT
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "DetalleVentas" (
+          "detalle_id" INTEGER NOT NULL CONSTRAINT "PK_DetalleVentas" PRIMARY KEY AUTOINCREMENT,
+          "venta_id" INTEGER NOT NULL,
+          "producto_id" INTEGER NOT NULL,
+          "Cantidad" INTEGER NOT NULL,
+          "precio_unitario" decimal(18,2) NOT NULL,
+          "Subtotal" decimal(18,2) NOT NULL,
+          CONSTRAINT "FK_DetalleVentas_Productos_producto_id" FOREIGN KEY ("producto_id") REFERENCES "Productos" ("producto_id") ON DELETE RESTRICT,
+          CONSTRAINT "FK_DetalleVentas_Ventas_venta_id" FOREIGN KEY ("venta_id") REFERENCES "Ventas" ("venta_id") ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Clientes" ("cliente_id", "Apellido", "Email", "Nombre", "Telefono")
+      VALUES (1, 'García', 'ana.garcia@email.com', 'Ana', '3001112233');
+      SELECT changes();
+      
+      INSERT INTO "Clientes" ("cliente_id", "Apellido", "Email", "Nombre", "Telefono")
+      VALUES (2, 'Pérez', 'luis.perez@email.com', 'Luis', '3004445566');
+      SELECT changes();
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Productos" ("producto_id", "Descripcion", "Nombre", "Precio", "Stock")
+      VALUES (1, 'Laptop 15 pulgadas', 'Laptop', '899.99', 10);
+      SELECT changes();
+      
+      INSERT INTO "Productos" ("producto_id", "Descripcion", "Nombre", "Precio", "Stock")
+      VALUES (2, 'Mouse inalámbrico', 'Mouse', '25.5', 50);
+      SELECT changes();
+      
+      INSERT INTO "Productos" ("producto_id", "Descripcion", "Nombre", "Precio", "Stock")
+      VALUES (3, 'Teclado mecánico', 'Teclado', '75.0', 30);
+      SELECT changes();
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX "IX_Clientes_Email" ON "Clientes" ("Email");
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_DetalleVentas_producto_id" ON "DetalleVentas" ("producto_id");
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_DetalleVentas_venta_id" ON "DetalleVentas" ("venta_id");
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_Ventas_cliente_id" ON "Ventas" ("cliente_id");
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+      VALUES ('20261120160049_InitialCreate', '8.0.11');
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5080
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\Brayan-Cangas\Documents\examen\SistemaVentas
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "p"."producto_id", "p"."Descripcion", "p"."Nombre", "p"."Precio", "p"."Stock"
+      FROM "Productos" AS "p"
+      ORDER BY "p"."Nombre"

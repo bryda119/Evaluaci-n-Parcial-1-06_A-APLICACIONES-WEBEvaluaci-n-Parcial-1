@@ -1,0 +1,57 @@
+@model IEnumerable<SistemaVentas.Models.Venta>
+@{
+    ViewData["Title"] = "Ventas";
+}
+
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <h2 class="font-display text-2xl font-semibold text-slate-900">Ventas</h2>
+        <p class="text-sm text-slate-500 mt-1">Historial de pedidos y totales registrados.</p>
+    </div>
+    <a asp-action="Create" class="inline-flex items-center justify-center rounded-xl bg-andes-blue px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-andes-blue/90 transition">
+        Nueva venta
+    </a>
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">@TempData["Mensaje"]</div>
+}
+
+<div class="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-panel">
+    <div class="overflow-x-auto">
+        <table class="table-pro">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="font-semibold text-slate-500 tabular-nums">#@item.VentaId</td>
+                        <td class="font-semibold text-slate-900">@item.Cliente?.NombreCompleto</td>
+                        <td class="text-slate-600">@item.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="font-semibold tabular-nums text-andes-blue">@item.Total.ToString("C")</td>
+                        <td class="text-right">
+                            <a asp-action="Details" asp-route-id="@item.VentaId" class="inline-flex rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-andes-blue/40 hover:text-andes-blue transition">
+                                Ver detalle
+                            </a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="!py-10 text-center text-slate-500">Aún no hay ventas registradas.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

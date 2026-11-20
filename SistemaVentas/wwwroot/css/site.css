@@ -1,0 +1,96 @@
+:root {
+  color-scheme: light;
+  --andes-navy: #000836;
+  --andes-blue: #0170B9;
+  --andes-gold: #E8B923;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 70% 45% at 100% -10%, rgba(1, 112, 185, 0.08), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 0% 100%, rgba(232, 185, 35, 0.06), transparent 50%);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #d7dee8;
+  background: #fff;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.925rem;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(0, 8, 54, 0.04);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0170B9;
+  box-shadow: 0 0 0 3px rgba(1, 112, 185, 0.18);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.01em;
+}
+
+.text-danger,
+.field-validation-error,
+.validation-summary-errors {
+  color: #dc2626;
+  font-size: 0.85rem;
+}
+
+.validation-summary-errors ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.input-validation-error {
+  border-color: #f87171 !important;
+}
+
+.table-pro {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-pro th {
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  font-weight: 700;
+  padding: 0.85rem 1rem;
+  background: #f3f7fb;
+  border-bottom: 1px solid #dde5ef;
+}
+
+.table-pro td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid #eef2f7;
+  font-size: 0.925rem;
+  vertical-align: middle;
+}
+
+.table-pro tbody tr:hover td {
+  background: #f7fbff;
+}
+
+.table-pro tbody tr:last-child td {
+  border-bottom: none;
+}

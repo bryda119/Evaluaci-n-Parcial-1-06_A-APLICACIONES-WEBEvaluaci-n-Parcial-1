@@ -1,0 +1,147 @@
+@model SistemaVentas.Models.VentaCreateViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Nueva venta";
+}
+
+<div class="mb-6">
+    <h2 class="font-display text-2xl font-semibold text-slate-900">Nueva venta</h2>
+    <p class="text-sm text-slate-500 mt-1">Selecciona cliente y productos. La cantidad solo acepta números enteros.</p>
+</div>
+
+<div class="max-w-4xl rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-panel">
+    <form asp-action="Create" id="formVenta" class="space-y-6" method="post">
+        <div asp-validation-summary="All" class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"></div>
+
+        <div class="max-w-md">
+            <label asp-for="ClienteId"></label>
+            <select asp-for="ClienteId" asp-items="ViewBag.Clientes" required>
+                <option value="">-- Seleccione cliente --</option>
+            </select>
+            <span asp-validation-for="ClienteId" class="text-danger"></span>
+        </div>
+
+        <div>
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="font-display font-semibold text-slate-900">Productos</h3>
+                <button type="button" id="btnAgregar" class="inline-flex rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-andes-blue/40 hover:text-andes-blue transition">
+                    + Agregar línea
+                </button>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-slate-200">
+                <table class="table-pro" id="tablaLineas">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th style="width:160px">Cantidad</th>
+                            <th style="width:100px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Lineas.Count; i++)
+                        {
+                            <tr class="linea-venta">
+                                <td>
+                                    <select name="Lineas[@i].ProductoId" class="producto-select" asp-items="ViewBag.Productos" required>
+                                        <option value="">-- Producto --</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="Lineas[@i].Cantidad" type="number" min="1" max="100000" step="1" inputmode="numeric" data-val-integer value="@Model.Lineas[i].Cantidad" required />
+                                    <p class="mt-1 text-xs text-slate-500">Solo enteros ≥ 1</p>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn-quitar rounded-lg px-3 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 transition">Quitar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 pt-1">
+            <button type="submit" class="inline-flex rounded-xl bg-andes-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-andes-blue/90 transition">Registrar venta</button>
+            <a asp-action="Index" class="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<template id="tplLinea">
+    <tr class="linea-venta">
+        <td>
+            <select class="producto-select" required>
+                <option value="">-- Producto --</option>
+                @foreach (SelectListItem opt in (SelectList)ViewBag.Productos)
+                {
+                    <option value="@opt.Value">@opt.Text</option>
+                }
+            </select>
+        </td>
+        <td>
+            <input type="number" min="1" max="100000" step="1" inputmode="numeric" data-val-integer value="1" required />
+            <p class="mt-1 text-xs text-slate-500">Solo enteros ≥ 1</p>
+        </td>
+        <td class="text-right">
+            <button type="button" class="btn-quitar rounded-lg px-3 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 transition">Quitar</button>
+        </td>
+    </tr>
+</template>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        (function () {
+            const tabla = document.querySelector('#tablaLineas tbody');
+            const tpl = document.getElementById('tplLinea');
+
+            function bindIntegerFilter(input) {
+                if (!input || input.dataset.filterBound) return;
+                input.dataset.filterBound = '1';
+                input.addEventListener('input', () => {
+                    const next = input.value.replace(/[^\d]/g, '');
+                    if (input.value !== next) input.value = next;
+                });
+            }
+
+            function reindex() {
+                tabla.querySelectorAll('tr.linea-venta').forEach((tr, i) => {
+                    const select = tr.querySelector('select');
+                    const input = tr.querySelector('input[type=number]');
+                    select.name = `Lineas[${i}].ProductoId`;
+                    input.name = `Lineas[${i}].Cantidad`;
+                    bindIntegerFilter(input);
+                });
+            }
+
+            document.getElementById('btnAgregar').addEventListener('click', () => {
+                tabla.appendChild(tpl.content.cloneNode(true));
+                reindex();
+            });
+
+            tabla.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-quitar')) {
+                    if (tabla.querySelectorAll('tr.linea-venta').length <= 1) return;
+                    e.target.closest('tr').remove();
+                    reindex();
+                }
+            });
+
+            document.getElementById('formVenta').addEventListener('submit', (e) => {
+                const lineas = [...tabla.querySelectorAll('tr.linea-venta')];
+                const validas = lineas.filter(tr => {
+                    const producto = tr.querySelector('select').value;
+                    const cant = parseInt(tr.querySelector('input[type=number]').value, 10);
+                    return producto && cant >= 1;
+                });
+                if (validas.length === 0) {
+                    e.preventDefault();
+                    alert('Agregue al menos un producto con cantidad numérica válida (mínimo 1).');
+                }
+            });
+
+            reindex();
+        })();
+    </script>
+}

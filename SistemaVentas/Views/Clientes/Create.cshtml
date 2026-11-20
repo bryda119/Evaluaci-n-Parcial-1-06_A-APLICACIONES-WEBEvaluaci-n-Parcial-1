@@ -1,0 +1,47 @@
+@model SistemaVentas.Models.Cliente
+@{
+    ViewData["Title"] = "Nuevo cliente";
+}
+
+<div class="mb-6">
+    <h2 class="font-display text-2xl font-semibold text-slate-900">Nuevo cliente</h2>
+    <p class="text-sm text-slate-500 mt-1">Nombre y apellido solo letras; teléfono solo números; email con formato válido.</p>
+</div>
+
+<div class="max-w-2xl rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-panel">
+    <form asp-action="Create" class="space-y-5" method="post">
+        <div asp-validation-summary="ModelOnly" class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"></div>
+        <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" maxlength="100" data-val-letters placeholder="Solo letras" autocomplete="given-name" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Apellido"></label>
+                <input asp-for="Apellido" maxlength="100" data-val-letters placeholder="Solo letras" autocomplete="family-name" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+        </div>
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" type="email" maxlength="150" placeholder="usuario@correo.com" autocomplete="email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <p class="mt-1 text-xs text-slate-500">Debe incluir @@ y un dominio válido</p>
+        </div>
+        <div>
+            <label asp-for="Telefono"></label>
+            <input asp-for="Telefono" type="tel" inputmode="tel" maxlength="15" data-val-phone placeholder="Ej: 0991234567" autocomplete="tel" />
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+            <p class="mt-1 text-xs text-slate-500">Solo números (7 a 15 dígitos). Opcional.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 pt-2">
+            <button type="submit" class="inline-flex rounded-xl bg-andes-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-andes-blue/90 transition">Guardar</button>
+            <a asp-action="Index" class="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

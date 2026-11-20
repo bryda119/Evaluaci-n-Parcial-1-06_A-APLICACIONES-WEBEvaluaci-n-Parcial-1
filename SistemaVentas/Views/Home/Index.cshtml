@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="relative overflow-hidden rounded-2xl border border-andes-navy/10 bg-andes-navy text-white shadow-panel mb-8">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(232,185,35,0.18),_transparent_50%),linear-gradient(135deg,#000836_0%,#00104a_45%,#0170B9_160%)]"></div>
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image:radial-gradient(#fff 1px, transparent 1px);background-size:18px 18px;"></div>
+    <div class="relative px-6 py-10 sm:px-10 sm:py-12 lg:px-12">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+            <img src="~/images/logo-uniandes.png" alt="UNIANDES" class="h-10 w-auto object-contain brightness-110" />
+            <span class="rounded-full border border-andes-gold/50 bg-andes-gold/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-andes-gold">Examen</span>
+        </div>
+        <p class="font-display text-[12px] uppercase tracking-[0.24em] text-andes-gold">Universidad UNIANDES</p>
+        <h2 class="mt-3 max-w-3xl font-display text-3xl sm:text-4xl tracking-wide leading-tight">
+            Sistema de Gestión de Ventas
+        </h2>
+        <p class="mt-3 max-w-2xl text-slate-200 text-base sm:text-lg leading-relaxed">
+            Proyecto académico para gestionar productos, clientes y ventas con control de stock,
+            alineado a la identidad institucional de la Universidad Regional Autónoma de los Andes.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+            <a asp-controller="Ventas" asp-action="Create" class="inline-flex items-center rounded-lg bg-andes-gold px-4 py-2.5 text-sm font-bold text-andes-navy hover:bg-yellow-300 transition">
+                Registrar venta
+            </a>
+            <a asp-controller="Productos" asp-action="Index" class="inline-flex items-center rounded-lg border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-bold text-white hover:bg-white/10 transition">
+                Ver inventario
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="grid gap-5 md:grid-cols-3">
+    <a asp-controller="Productos" asp-action="Index" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-panel hover:-translate-y-0.5 hover:border-andes-blue/40 transition">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-andes-blue/10 text-andes-blue font-display tracking-wide text-sm">PR</div>
+        <h3 class="mt-5 font-display text-xl tracking-wide text-andes-navy">Productos</h3>
+        <p class="mt-2 text-sm text-slate-500 leading-relaxed">Alta, edición y consulta de inventario con precios y stock.</p>
+        <span class="mt-5 inline-flex text-sm font-bold text-andes-blue">Abrir módulo →</span>
+    </a>
+
+    <a asp-controller="Clientes" asp-action="Index" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-panel hover:-translate-y-0.5 hover:border-andes-blue/40 transition">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-andes-navy/5 text-andes-navy font-display tracking-wide text-sm">CL</div>
+        <h3 class="mt-5 font-display text-xl tracking-wide text-andes-navy">Clientes</h3>
+        <p class="mt-2 text-sm text-slate-500 leading-relaxed">Directorio comercial con email único y datos de contacto.</p>
+        <span class="mt-5 inline-flex text-sm font-bold text-andes-blue">Abrir módulo →</span>
+    </a>
+
+    <a asp-controller="Ventas" asp-action="Index" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-panel hover:-translate-y-0.5 hover:border-andes-gold/50 transition">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-andes-gold/15 text-andes-goldDark font-display tracking-wide text-sm">VE</div>
+        <h3 class="mt-5 font-display text-xl tracking-wide text-andes-navy">Ventas</h3>
+        <p class="mt-2 text-sm text-slate-500 leading-relaxed">Registra pedidos multi-producto y descuenta stock automáticamente.</p>
+        <span class="mt-5 inline-flex text-sm font-bold text-andes-blue">Abrir módulo →</span>
+    </a>
+</div>

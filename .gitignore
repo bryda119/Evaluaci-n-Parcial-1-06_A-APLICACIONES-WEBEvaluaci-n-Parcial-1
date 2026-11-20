@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/data/
+**/.vs/
+**/*.user
+**/*.db
+**/*.db-shm
+**/*.db-wal
+.idea/
+*.swp

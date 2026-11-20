@@ -1,0 +1,64 @@
+@model SistemaVentas.Models.Venta
+@{
+    ViewData["Title"] = $"Venta #{Model.VentaId}";
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">@TempData["Mensaje"]</div>
+}
+
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 font-semibold">Comprobante</p>
+        <h2 class="font-display text-2xl font-semibold text-slate-900 mt-1">Venta #@Model.VentaId</h2>
+    </div>
+    <div class="rounded-2xl border border-andes-blue/30 bg-andes-blue/10 px-4 py-3 text-right">
+        <p class="text-[11px] uppercase tracking-[0.14em] text-andes-blue font-semibold">Total</p>
+        <p class="font-display text-2xl font-semibold text-andes-deep tabular-nums">@Model.Total.ToString("C")</p>
+    </div>
+</div>
+
+<div class="grid gap-5 lg:grid-cols-3 mb-5">
+    <div class="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-panel lg:col-span-1">
+        <p class="text-xs uppercase tracking-[0.12em] text-slate-500 font-semibold">Cliente</p>
+        <p class="mt-2 font-display text-lg font-semibold text-slate-900">@Model.Cliente?.NombreCompleto</p>
+        <p class="text-sm text-slate-500 mt-1">@Model.Cliente?.Email</p>
+        <p class="text-xs uppercase tracking-[0.12em] text-slate-500 font-semibold mt-5">Fecha</p>
+        <p class="mt-1 text-slate-800">@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+
+    <div class="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-panel lg:col-span-2">
+        <div class="px-5 py-4 border-b border-slate-100">
+            <h3 class="font-display font-semibold text-slate-900">Líneas de venta</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="table-pro">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>P. unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var d in Model.Detalles)
+                    {
+                        <tr>
+                            <td class="font-semibold text-slate-900">@d.Producto?.Nombre</td>
+                            <td class="tabular-nums">@d.Cantidad</td>
+                            <td class="tabular-nums">@d.PrecioUnitario.ToString("C")</td>
+                            <td class="font-semibold tabular-nums">@d.Subtotal.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-wrap gap-3">
+    <a asp-action="Index" class="inline-flex rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">Volver al listado</a>
+    <a asp-action="Create" class="inline-flex rounded-xl bg-andes-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-andes-blue/90 transition">Nueva venta</a>
+</div>

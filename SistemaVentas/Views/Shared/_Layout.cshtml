@@ -1,0 +1,135 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string NavClass(string name) =>
+        string.Equals(controller, name, StringComparison.OrdinalIgnoreCase)
+            ? "bg-white/10 text-andes-gold border border-andes-gold/40"
+            : "text-slate-200 hover:bg-white/5 hover:text-white border border-transparent";
+}
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UNIANDES | Sistema de Ventas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Oswald', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        andes: {
+                            navy: '#000836',
+                            deep: '#00104a',
+                            blue: '#0170B9',
+                            gold: '#E8B923',
+                            goldDark: '#C49A12',
+                            gray: '#303030',
+                        }
+                    },
+                    boxShadow: {
+                        panel: '0 12px 40px -16px rgba(0, 8, 54, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="h-full font-sans text-slate-800 bg-[#f4f6f9] antialiased">
+    <div class="min-h-full lg:flex">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 bg-andes-navy text-white border-r border-white/10">
+            <div class="flex h-full flex-col">
+                <div class="px-5 pt-6 pb-5 border-b border-white/10 bg-andes-deep/60">
+                    <a asp-controller="Home" asp-action="Index" class="block">
+                        <img src="~/images/logo-uniandes.png" alt="Universidad UNIANDES" class="h-14 w-auto object-contain" />
+                        <p class="mt-3 text-[11px] uppercase tracking-[0.2em] text-andes-gold font-bold">Examen académico</p>
+                        <h1 class="font-display text-xl tracking-wide mt-1 text-white">Sistema de Ventas</h1>
+                    </a>
+                </div>
+
+                <nav class="flex-1 px-4 py-5 space-y-1.5">
+                    <p class="px-3 mb-2 text-[11px] uppercase tracking-[0.18em] text-slate-400 font-bold">Módulos</p>
+                    <a asp-controller="Home" asp-action="Index" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold @NavClass("Home")">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-andes-blue/30 text-[11px] font-black">IN</span>
+                        Inicio
+                    </a>
+                    <a asp-controller="Productos" asp-action="Index" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold @NavClass("Productos")">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-andes-blue/30 text-[11px] font-black">PR</span>
+                        Productos
+                    </a>
+                    <a asp-controller="Clientes" asp-action="Index" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold @NavClass("Clientes")">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-andes-blue/30 text-[11px] font-black">CL</span>
+                        Clientes
+                    </a>
+                    <a asp-controller="Ventas" asp-action="Index" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold @NavClass("Ventas")">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-andes-blue/30 text-[11px] font-black">VE</span>
+                        Ventas
+                    </a>
+                </nav>
+
+                <div class="px-5 py-5 border-t border-white/10">
+                    <div class="rounded-xl bg-gradient-to-br from-andes-blue/30 to-andes-navy p-4 border border-andes-gold/30">
+                        <p class="font-display text-sm tracking-wide text-andes-gold">UNIANDES</p>
+                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">Universidad Regional Autónoma de los Andes — Ambato, Ecuador.</p>
+                        <a href="https://www.uniandes.edu.ec/" target="_blank" rel="noopener" class="inline-block mt-3 text-xs font-bold text-white hover:text-andes-gold transition">uniandes.edu.ec →</a>
+                    </div>
+                    <p class="mt-4 text-[11px] text-slate-500">&copy; 2026 Universidad UNIANDES</p>
+                </div>
+            </div>
+        </aside>
+
+        <div id="sidebar-backdrop" class="fixed inset-0 z-30 bg-andes-navy/60 backdrop-blur-sm hidden lg:hidden"></div>
+
+        <div class="flex-1 min-w-0 flex flex-col min-h-screen">
+            <div class="bg-andes-gray text-white text-[11px] tracking-wide">
+                <div class="px-4 sm:px-6 lg:px-8 h-8 flex items-center justify-between gap-3">
+                    <p class="font-bold uppercase opacity-90">Universidad UNIANDES · Inspira</p>
+                    <p class="hidden sm:block opacity-80">Sistema de Gestión de Ventas · Examen</p>
+                </div>
+            </div>
+
+            <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+                <div class="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <button id="btn-menu" type="button" class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-andes-navy shadow-sm" aria-label="Abrir menú">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                        </button>
+                        <div>
+                            <p class="text-[11px] uppercase tracking-[0.18em] text-andes-blue font-bold">Panel académico</p>
+                            <p class="font-display text-lg tracking-wide text-andes-navy leading-none mt-0.5">@ViewData["Title"]</p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-2">
+                        <span class="inline-flex items-center gap-2 rounded-full border border-andes-gold/40 bg-andes-gold/10 px-3 py-1 text-xs font-bold text-andes-goldDark">
+                            <span class="h-1.5 w-1.5 rounded-full bg-andes-gold"></span>
+                            UNIANDES
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+                @RenderBody()
+            </main>
+
+            <footer class="border-t border-slate-200 bg-white">
+                <div class="px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-slate-500">
+                    <p>&copy; 2026 Universidad Regional Autónoma de los Andes — UNIANDES</p>
+                    <p>Examen · Sistema de Gestión de Ventas</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
